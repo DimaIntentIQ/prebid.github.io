@@ -61,7 +61,7 @@ pbjs.setConfig({
                 partner: 123456,     // valid partner id
                 timeoutInMillis: 500,
                 browserBlackList: "chrome",
-                callback: (data, group) => window.pbjs.requestBids(),
+                callback: (data, group) => {...}, // your logic here
                 manualWinReportEnabled: true,
                 domainName: "currentDomain.com",
                 gamObjectReference: googletag,
