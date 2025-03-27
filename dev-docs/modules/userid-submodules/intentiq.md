@@ -49,6 +49,8 @@ Please find below list of parameters that could be used in configuring Intent IQ
 | params.gamObjectReference      | Optional | Object   | This is a reference to the Google Ad Manager (GAM) object, which will be used to set targeting. If this parameter is not provided, the group reporting will not be configured.                                                                                                                                                                  | `googletag`                           |
 | params.gamParameterName        | Optional | String   | The name of the targeting parameter that will be used to pass the group. If not specified, the default value is `intent_iq_group`.                                                                                                                                                                                                        | `"intent_iq_group"`                           |
 | params.adUnitConfig             | Optional | Number   | Determines how the `placementId` parameter is extracted in the report (default is 1). Possible values: 1 – adUnitCode first, 2 – placementId first, 3 – only adUnitCode, 4 – only placementId                                                                                                                                               | `1`                                           |
+| params.sourceMetaData          | Optional | String   | This metadata can be provided by the partner and will be included in the requests URL as a query parameter                                                                                                                                                                                                                          | `"123.123.123.123"`                             |
+| params.sourceMetaDataExternal  | Optional | Number   | This metadata can be provided by the partner and will be included in the requests URL as a query parameter                                                                                                                                                                                                                          | `123456`                                      |
 
 ### Configuration example
 
@@ -66,7 +68,9 @@ pbjs.setConfig({
                 domainName: "currentDomain.com",
                 gamObjectReference: googletag,
                 gamParameterName: "intent_iq_group",
-                adUnitConfig: 1 // Extracting placementId strategy (adUnitCode or placementId order of priorities)
+                adUnitConfig: 1, // Extracting placementId strategy (adUnitCode or placementId order of priorities)
+                sourceMetaData: "123.123.123.123", // Optional parameter
+                sourceMetaDataExternal: 123456, // Optional parameter
             },
             storage: {
                 type: "html5",
