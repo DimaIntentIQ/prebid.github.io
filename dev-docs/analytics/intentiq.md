@@ -84,6 +84,7 @@ adType: 'banner' // Specifies the type of ad served
 }
 ```
 
+{: .table .table-bordered .table-striped }
 | Field              | Data Type | Description                                                                                                                                      | Example                       | Mandatory |
 |--------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|-----------|
 | biddingPlatformId   | Integer   | Specify the platform in which this ad impression was rendered – 1 – Prebid, 2 – Amazon, 3 – Google, 4 – Open RTB (including your local Prebid server) | 1                             | Yes       |
