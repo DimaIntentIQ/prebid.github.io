@@ -51,7 +51,9 @@ Please find below list of parameters that could be used in configuring Intent IQ
 | params.adUnitConfig             | Optional | Number   | Determines how the `placementId` parameter is extracted in the report (default is 1). Possible values: 1 – adUnitCode first, 2 – placementId first, 3 – only adUnitCode, 4 – only placementId                                                                                                                                               | `1`                                           |
 | params.sourceMetaData          | Optional | String   | This metadata can be provided by the partner and will be included in the requests URL as a query parameter                                                                                                                                                                                                                          | `"123.123.123.123"`                             |
 | params.sourceMetaDataExternal  | Optional | Number   | This metadata can be provided by the partner and will be included in the requests URL as a query parameter                                                                                                                                                                                                                          | `123456`                                      |
-
+| params.iiqServerAddress        | Optional | String   | The base URL for the IntentIQ API server. If `iiqServerAddress` is provided in `configParams`, it will be used.                    | `"https://api.example.com"`                    |
+| params.iiqPixelServerAddress   | Optional | String   | The base URL for the IntentIQ pixel synchronization server. If `iiqPixelServerAddress` is provided in `configParams`, it will be used.  | `"https://sync.example.com"`                   |
+| params.reportingServerAddress  | Optional | String   | The base URL for the IntentIQ reporting server. If `reportingServerAddress` is provided in `configParams`, it will be used.| `"https://reports.exmaple.com/report"`         |
 ### Configuration example
 
 ```javascript
