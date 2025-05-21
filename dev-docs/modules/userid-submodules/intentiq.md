@@ -60,8 +60,7 @@ Please find below list of parameters that could be used in configuring Intent IQ
 | params.additionalParameters | Optional | Array | This parameter allows sending additional custom key-value parameters with specific destination logic (sync, VR, winreport). Each custom parameter is defined as an object in the array. | `[ { parameterName: “abc”, parameterValue: 123, destination: [1,1,0] } ]` |
 | params.additionalParameters [0].parameterName | Required | String | Name of the custom parameter. This will be sent as a query parameter. | `"abc"` |
 | params.additionalParameters [0].parameterValue | Required | String / Number | Value to assign to the parameter. | `123` |
-| params.additionalParameters [0].destination | Required | Array | Array of numbers either `1` or `0` . Controls where this parameter is sent `[sendWithSync, sendWithVr, winreport]`. | `[1, 0, 0]`
-
+| params.additionalParameters [0].destination | Required | Array | Array of numbers either `1` or `0`. Controls where this parameter is sent `[sendWithSync, sendWithVr, winreport]`. | `[1, 0, 0]` |
 
 ### Configuration example
 
