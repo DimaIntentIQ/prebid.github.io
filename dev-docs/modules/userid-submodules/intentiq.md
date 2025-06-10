@@ -58,8 +58,6 @@ Please find below list of parameters that could be used in configuring Intent IQ
 
 | params.groupChanged             | Optional | Function | A callback that is triggered every time the user’s A/B group is set or updated.                                                                                         |`(group) => console.log('Group changed:', group)` |
 
-
-
 ### Configuration example
 
 ```javascript
