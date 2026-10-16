@@ -90,7 +90,7 @@ While the WURFL RTD module enriches the OpenRTB 2.0 payload, SSP adapters must a
 ### Integration Scenarios
 
 | SSP Adapter Status | Required Adapter Changes | Required Server Changes |
-|-------------------|--------------------------|-------------------------|
+| ------------------ | ------------------------ | ----------------------- |
 | Already passing ORTB2 device to server | No changes required | Update backend logic to utilize device data |
 | Not currently passing device data | Update adapter to read `device` and/or `device.ext.wurfl` and pass to endpoint | Update backend logic to utilize device data |
 | No Bidder Adapter exists | Implement Prebid.js adapter to read and pass `device` and/or `device.ext.wurfl` | Implement endpoint logic to read and utilize data |
@@ -100,7 +100,7 @@ While the WURFL RTD module enriches the OpenRTB 2.0 payload, SSP adapters must a
 To build the WURFL RTD module with Prebid.js:
 
 ```bash
-gulp build --modules="wurflRtdProvider,appnexusBidAdapter,..."
+gulp build --modules="wurflRtdProvider,msftBidAdapter,..."
 ```
 
 ## Configuration
@@ -124,7 +124,7 @@ pbjs.setConfig({
 {: .table .table-bordered .table-striped }
 
 | Name | Type | Description | Default |
-|------|------|-------------|---------|
+| ---- | ---- | ----------- | ------- |
 | `name` | String | Real time data module name | Always 'wurfl' |
 | `params` | Object | Configuration parameters | |
 | `params.altHost` | String | Alternate host to connect to WURFL.js | |
@@ -132,12 +132,45 @@ pbjs.setConfig({
 | `params.abName` | String | A/B test name identifier | `'unknown'` |
 | `params.abSplit` | Number | Fraction of users in treatment group (0-1) | `0.8` |
 
+## IMPORTANT:  GDPR / TCF Vendor Consent
+
+WURFL is a privacy-safe signal. WURFL RTD does not have a registered IAB Global Vendor List (GVL) ID. 
+If your site enforces TCF vendor consent for the "storage" purpose — which is Prebid's *default*
+behavior the moment `consentManagement.gdpr` is configured, whether or not you set
+`rules` yourself — Prebid has no vendor ID to check consent against for this module,
+and will deny it local storage access for every GDPR-scoped visitor. The module still
+runs, but permanently falls back to lightweight client-side enrichment (LCE) instead
+of full WURFL device-database enrichment for that traffic.
+
+To avoid this, add "wurfl" to the storage purpose's `vendorExceptions`:
+
+```pbjs.setConfig({
+  consentManagement: {
+    gdpr: {
+      rules: [
+        { 
+          purpose: 'storage', 
+          enforcePurpose: true,
+          enforceVendor: true,
+          vendorExceptions: [],
+          softVendorExceptions: ['wurfl'] 
+        }
+      ]
+    }
+  }
+});
+```
+
+{: .alert.alert-warning :}
+This only matters if your site enforces TCF vendor consent for "storage"
+Sites with no CMP, or with GDPR enforcement disabled, are unaffected
+
 ## Testing
 
 To test the WURFL RTD module locally:
 
 ```bash
-gulp serve --modules=wurflRtdProvider,appnexusBidAdapter
+gulp serve --modules=wurflRtdProvider,msftBidAdapter
 ```
 
 Then navigate to:
@@ -163,7 +196,7 @@ WURFL RTD adds comprehensive device information to the bid request. The `ortb2.d
     "language": "it",
     "make": "Apple",
     "model": "iPhone 16e",
-    "devicetype": 1,
+    "devicetype": 4,
     "os": "iOS",
     "osv": "18.3",
     "hwv": "iPhone 16e",
@@ -266,6 +299,6 @@ The WURFL RTD module processes minimal personal data under legitimate interest f
 
 * Device detection uses only HTTP headers (User-Agent, Client Hints)
 * No user tracking or cross-site identification
-* IP addresses processed transiently for service delivery only
+* IP addresses are retained for up to 36 months for fraud detection and invalid traffic prevention, then permanently redacted. They are not used for user identification or behavioral profiling.
 
 For questions or support, visit [ScientiaMobile Support](https://support.scientiamobile.com).
