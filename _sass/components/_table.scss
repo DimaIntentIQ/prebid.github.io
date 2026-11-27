@@ -1,5 +1,15 @@
 table.table {
   background: $color--white;
+
+  // let long inline code (param names, URLs) wrap instead of widening the table
+  td code {
+    overflow-wrap: anywhere;
+  }
+
+  // keep short example values in the last column on one line
+  td:last-child {
+    min-width: 9em;
+  }
 }
 
 .table-bordered {
