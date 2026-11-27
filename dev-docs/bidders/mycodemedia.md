@@ -1,35 +1,112 @@
 ---
 layout: bidder
-title: MCodeMedia
-description: Prebid MCodeMedia Bidder Adapter
-biddercode: mcodemedia
-gpp_sids: usstate_all
+title: MyCodeMedia
+description: Prebid MyCodeMedia Bidder Adapter
+pbjs: true
+pbs: false
+biddercode: mycodemedia
+gvl_id: none
 tcfeu_supported: false
 usp_supported: true
-coppa_supported: true
+gpp_sids: none
 schain_supported: true
-deals_supported: false
+dchain_supported: false
 floors_supported: true
-fpd_supported: false
-ortb_blocking_supported: false
-media_types: banner, video, native
-multiformat_supported: will-bid-on-one
 userIds: all
-pbjs: true
-pbs: true
-pbs_app_supported: true
+media_types: banner, video, native
 safeframes_ok: true
+deals_supported: true
 sidebarType: 1
+fpd_supported: true
+multiformat_supported: will-bid-on-any
+
 ---
 
 ## Bid Params
 
 {: .table .table-bordered .table-striped }
-| Name          | Scope    | Description  | Example                         | Type       |
-|---------------|----------|--------------|---------------------------------|------------|
-| `placementId` | optional | Placement Id | `'0'`                           | `'string'` |
-| `endpointId`  | optional | Endpoint Id  | `'0'`                           | `'string'` |
+| Name        | Scope     | Description           | Example            | Type     |
+|-------------|-----------|-----------------------|--------------------|----------|
+| `tagId`     | required* | MyCodeMedia tag ID    | `"testnexx"`       | `string` |
+| `placement` | required* | MyCodeMedia placement | `"TEST_PLACEMENT"` | `string` |
 
-## Note
+\* Exactly one of `tagId` or `placement` is required; if both are passed, `tagId` takes precedence. Ask your account manager which one to use.
 
-For the prebid server and prebid.js you only need to use one parameter: either placementId or endpointId
+## Bidder Config
+
+You can allow writing in localStorage `pbjs.bidderSettings` for the bidder `mycodemedia`
+
+{% include dev-docs/storageAllowed.md %}
+
+```javascript
+pbjs.bidderSettings = {
+    mycodemedia: {
+        storageAllowed : true
+    }
+}
+```
+
+## First Party Data
+
+Publishers should use the `ortb2` method of setting [First Party Data](/features/firstPartyData).
+
+## Test Parameters
+
+```javascript
+var adUnits = [
+   // Banner adUnit
+   {
+      code: 'banner-div',
+      mediaTypes: {
+        banner: {
+          sizes: [[300, 250], [300,600]]
+        }
+      },
+      bids: [{
+         bidder: 'mycodemedia',
+         params: {
+            tagId: 'testnexx'
+         }
+       }]
+   },
+   // Video adUnit
+   {
+        code: 'video1',
+        mediaTypes: {
+            video: {
+                playerSize: [640, 480],
+                context: 'instream'
+            }
+        },
+        bids: [{
+            bidder: 'mycodemedia',
+            params: {
+               tagId: 'testnexx'
+            }
+        }]
+    },
+     // Native adUnit
+   {
+        code: 'native1',
+        mediaTypes: {
+            native: {
+                title: {
+                    required: true
+                },
+                image: {
+                    required: true
+                },
+                sponsoredBy: {
+                    required: true
+                }
+            }
+        },
+        bids: [{
+            bidder: 'mycodemedia',
+            params: {
+               tagId: 'testnexx'
+            }
+        }]
+    }
+];
+```
